@@ -7,9 +7,30 @@
 
 // Initialisez une instance de Stripe avec votre clé publique de test
 const stripe = Stripe('pk_test_51PZ7usRwPpR3xpZKA7GML6TPZeE8k06FJNvF8hLFblVNCQRKl2S73aRgy7nb5wuMDyVGnaz8upyle8s6IEYO6QII00WCH3YcTd');
+//En lieu et place des lignes : 
+//```javascript
+//let amount;
+//initialize();
+//```
+//Comportements attendu :
+//- Lorsque le montant change, mettez à jour la valeur de la variable `amount` avec le nouveau montant choisi.
+//- Si le montant est égal ou supérieur à 1€, appelez la fonction "initialize()" à ce moment précis de l'exécution.
 
-let amount;
-initialize();
+let amount = 0; // Initialisez la variable 'amount'
+
+// Supposons que 'input' est l'élément HTML où l'utilisateur entre le montant
+let input = document.getElementById('montant-personnalise');
+
+// Ajoutez un gestionnaire d'événements 'change' à l'élément 'input'
+input.addEventListener('change', (event) => {
+    // Mettez à jour la valeur de 'amount' avec le nouveau montant entré par l'utilisateur
+    amount = event.target.value;
+    
+    if (amount >= 1) {
+        initialize();
+    }
+    
+});
 
 let elements;
 
@@ -48,7 +69,7 @@ async function handleSubmit(e) {
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
-      return_url: "https://laurebonnevalle.sites.3wa.io/PHP_Paiement/bre02-php-donate-for-ducks/public/app/views/checkout.html",
+      return_url: "https://laurebonnevalle.sites.3wa.io/PHP_Paiement/bre02-php-donate-for-ducks/public/index.php",
     },
   });
 
